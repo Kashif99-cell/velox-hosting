@@ -1,0 +1,188 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VELOX HOSTING</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:#080d18;
+  color:white;
+  font-family:Arial,sans-serif;
+}
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:22px 8%;
+  background:#0d1525;
+  border-bottom:1px solid #18345c;
+}
+.logo{font-size:25px;font-weight:bold;color:#28a5ff}
+nav a{
+  color:white;text-decoration:none;
+  margin-left:22px;font-size:14px;
+}
+nav a:hover{color:#28a5ff}
+.hero{
+  text-align:center;
+  padding:110px 20px;
+  background:radial-gradient(ellipse at center,#12366a,#080d18 70%);
+}
+.hero h1{font-size:55px;margin-bottom:20px}
+.hero h1 span{color:#28a5ff}
+.hero p{color:#b7c7df;font-size:17px;line-height:1.7}
+.btn{
+  display:inline-block;
+  margin-top:28px;
+  padding:15px 30px;
+  background:#168cff;
+  color:white;
+  text-decoration:none;
+  border-radius:7px;
+  font-weight:bold;
+}
+.btn:hover{background:#0064c7}
+section{padding:65px 8%;text-align:center}
+h2{font-size:32px;margin-bottom:35px}
+.plans{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:22px;
+}
+.card{
+  background:#101b2e;
+  border:1px solid #203d64;
+  padding:30px 20px;
+  border-radius:12px;
+}
+.card h3{color:#36aaff;font-size:23px}
+.card h1{margin:20px 0;font-size:30px}
+.card p{color:#b9c7d9;line-height:2}
+.features{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:20px;
+}
+.feature{
+  background:#101b2e;
+  padding:28px;
+  border-radius:10px;
+  border:1px solid #203d64;
+}
+.feature h3{color:#36aaff;margin-bottom:12px}
+.feature p{color:#b9c7d9}
+footer{
+  background:#0d1525;
+  text-align:center;
+  padding:30px;
+  color:#9aacc4;
+  border-top:1px solid #203d64;
+}
+@media(max-width:600px){
+  header{flex-direction:column;gap:15px}
+  nav a{margin:8px;font-size:12px}
+  .hero h1{font-size:38px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">⚡ VELOX HOSTING</div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#plans">Plans</a>
+    <a href="#features">Features</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<div class="hero" id="home">
+  <h1>WELCOME TO <span>VELOX</span></h1>
+  <p>
+    Powerful Minecraft Server Hosting.<br>
+    Your Server. Your Rules. Your Community.
+  </p>
+  <a href="#plans" class="btn">Explore Hosting Plans</a>
+</div>
+
+<section id="plans">
+  <h2>Our Hosting Plans</h2>
+  <div class="plans">
+
+    <div class="card">
+      <h3>FREE PLAN</h3>
+      <h1>$0 / Month</h1>
+      <p>
+        1 GB RAM<br>
+        5 GB Storage<br>
+        Minecraft Java<br>
+        Basic Support
+      </p>
+      <a href="#contact" class="btn">Coming Soon</a>
+    </div>
+
+    <div class="card">
+      <h3>PRO PLAN</h3>
+      <h1>Coming Soon</h1>
+      <p>
+        More RAM<br>
+        More Storage<br>
+        Java Support<br>
+        Priority Support
+      </p>
+      <a href="#contact" class="btn">Coming Soon</a>
+    </div>
+
+    <div class="card">
+      <h3>ULTIMATE PLAN</h3>
+      <h1>Coming Soon</h1>
+      <p>
+        High Performance<br>
+        More Resources<br>
+        Advanced Panel<br>
+        Premium Support
+      </p>
+      <a href="#contact" class="btn">Coming Soon</a>
+    </div>
+
+  </div>
+</section>
+
+<section id="features">
+  <h2>Why Choose VELOX?</h2>
+  <div class="features">
+    <div class="feature">
+      <h3>⚡ Fast Hosting</h3>
+      <p>Designed for smooth Minecraft gameplay.</p>
+    </div>
+    <div class="feature">
+      <h3>🎮 Minecraft Support</h3>
+      <p>Build your own Minecraft community.</p>
+    </div>
+    <div class="feature">
+      <h3>🛡️ Server Control</h3>
+      <p>Manage your server from a control panel.</p>
+    </div>
+    <div class="feature">
+      <h3>🌍 Community</h3>
+      <p>Bring your friends and players together.</p>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <h2>Ready to Start?</h2>
+  <p>VELOX HOSTING — Your Minecraft Journey Starts Here.</p>
+  <a href="https://discord.com/" class="btn">Join Discord</a>
+</section>
+
+<footer>
+  © 2026 VELOX HOSTING. All Rights Reserved.
+</footer>
+
+</body>
+</html>
