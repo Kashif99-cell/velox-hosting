@@ -3,186 +3,148 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VELOX HOSTING</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VELOX HOSTING | Dashboard</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{
-  background:#080d18;
-  color:white;
-  font-family:Arial,sans-serif;
-}
-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:22px 8%;
-  background:#0d1525;
-  border-bottom:1px solid #18345c;
-}
-.logo{font-size:25px;font-weight:bold;color:#28a5ff}
-nav a{
-  color:white;text-decoration:none;
-  margin-left:22px;font-size:14px;
-}
-nav a:hover{color:#28a5ff}
-.hero{
-  text-align:center;
-  padding:110px 20px;
-  background:radial-gradient(ellipse at center,#12366a,#080d18 70%);
-}
-.hero h1{font-size:55px;margin-bottom:20px}
-.hero h1 span{color:#28a5ff}
-.hero p{color:#b7c7df;font-size:17px;line-height:1.7}
-.btn{
-  display:inline-block;
-  margin-top:28px;
-  padding:15px 30px;
-  background:#168cff;
-  color:white;
-  text-decoration:none;
-  border-radius:7px;
-  font-weight:bold;
-}
-.btn:hover{background:#0064c7}
-section{padding:65px 8%;text-align:center}
-h2{font-size:32px;margin-bottom:35px}
-.plans{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:22px;
-}
-.card{
-  background:#101b2e;
-  border:1px solid #203d64;
-  padding:30px 20px;
-  border-radius:12px;
-}
-.card h3{color:#36aaff;font-size:23px}
-.card h1{margin:20px 0;font-size:30px}
-.card p{color:#b9c7d9;line-height:2}
-.features{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:20px;
-}
-.feature{
-  background:#101b2e;
-  padding:28px;
-  border-radius:10px;
-  border:1px solid #203d64;
-}
-.feature h3{color:#36aaff;margin-bottom:12px}
-.feature p{color:#b9c7d9}
-footer{
-  background:#0d1525;
-  text-align:center;
-  padding:30px;
-  color:#9aacc4;
-  border-top:1px solid #203d64;
-}
-@media(max-width:600px){
-  header{flex-direction:column;gap:15px}
-  nav a{margin:8px;font-size:12px}
-  .hero h1{font-size:38px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial;background:#080d18;color:white}
+header{background:#101b2e;padding:20px 6%;display:flex;
+justify-content:space-between;align-items:center;border-bottom:1px solid #23466e}
+.logo{font-size:24px;color:#29a5ff;font-weight:bold}
+header span{color:#a9bad0;font-size:13px}
+.container{display:flex;min-height:85vh}
+aside{width:220px;background:#0d1626;padding:25px 15px}
+aside h3{color:#29a5ff;margin-bottom:25px}
+aside a{display:block;padding:14px;color:#c4d2e5;text-decoration:none;border-radius:7px}
+aside a:hover{background:#183252;color:white}
+main{padding:35px;width:100%;max-width:1200px}
+h1{font-size:30px;margin-bottom:10px}
+.sub{color:#9db0c8;margin-bottom:30px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:18px}
+.card{background:#101b2e;border:1px solid #203c60;border-radius:12px;padding:22px}
+.card small{color:#9bb2cf}
+.card h2{margin-top:12px;color:#36aaff}
+.panel{background:#101b2e;border:1px solid #203c60;border-radius:12px;padding:25px;margin-top:25px}
+select,input{background:#080d18;color:white;border:1px solid #29476b;padding:12px;border-radius:7px;width:100%;margin:10px 0}
+button{border:0;border-radius:7px;padding:12px 18px;color:white;font-weight:bold;cursor:pointer;margin:5px}
+.start{background:#087e46}.stop{background:#c03939}.restart{background:#176ac2}
+.create{background:#168cff;width:100%;margin-top:12px}
+.console{background:#050a12;color:#61e69a;padding:18px;border-radius:8px;margin-top:15px;min-height:110px;font-family:monospace;line-height:1.8}
+.status{color:#ffc34e;font-weight:bold}
+footer{text-align:center;color:#8195ae;padding:25px}
+@media(max-width:650px){
+.container{display:block}
+aside{width:100%;display:flex;flex-wrap:wrap;gap:5px}
+aside h3{width:100%;margin-bottom:8px}
+aside a{padding:10px}
+main{padding:20px}
+header{padding:17px}
 }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">⚡ VELOX HOSTING</div>
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#plans">Plans</a>
-    <a href="#features">Features</a>
-    <a href="#contact">Contact</a>
-  </nav>
+<div class="logo">⚡ VELOX HOSTING</div>
+<span>Control Panel v1.0</span>
 </header>
 
-<div class="hero" id="home">
-  <h1>WELCOME TO <span>VELOX</span></h1>
-  <p>
-    Powerful Minecraft Server Hosting.<br>
-    Your Server. Your Rules. Your Community.
-  </p>
-  <a href="#plans" class="btn">Explore Hosting Plans</a>
+<div class="container">
+<aside>
+<h3>VELOX PANEL</h3>
+<a href="#dashboard">Dashboard</a>
+<a href="#create">Create Server</a>
+<a href="#console">Console</a>
+<a href="#account">Account</a>
+</aside>
+
+<main id="dashboard">
+<h1>Server Dashboard</h1>
+<p class="sub">Welcome to your VELOX control panel.</p>
+
+<div class="cards">
+<div class="card"><small>Total Servers</small><h2 id="total">0</h2></div>
+<div class="card"><small>Server Status</small><h2 id="status">Offline</h2></div>
+<div class="card"><small>RAM Allocation</small><h2>1 GB</h2></div>
 </div>
 
-<section id="plans">
-  <h2>Our Hosting Plans</h2>
-  <div class="plans">
+<div class="panel" id="create">
+<h2>Create Your Server</h2>
+<p class="sub">Choose your Minecraft edition.</p>
+<select id="edition">
+<option value="Java">Minecraft Java</option>
+<option value="Bedrock">Minecraft Bedrock</option>
+</select>
+<input id="serverName" placeholder="Enter server name">
+<button class="create" onclick="createServer()">+ Create Server</button>
+<p id="message" class="sub"></p>
+</div>
 
-    <div class="card">
-      <h3>FREE PLAN</h3>
-      <h1>$0 / Month</h1>
-      <p>
-        1 GB RAM<br>
-        5 GB Storage<br>
-        Minecraft Java<br>
-        Basic Support
-      </p>
-      <a href="#contact" class="btn">Coming Soon</a>
-    </div>
+<div class="panel">
+<h2>Server Controls</h2>
+<p class="sub">Selected server: <b id="selected">None</b></p>
+<p class="status" id="controlStatus">Offline</p>
+<button class="start" onclick="control('start')">Start</button>
+<button class="stop" onclick="control('stop')">Stop</button>
+<button class="restart" onclick="control('restart')">Restart</button>
+</div>
 
-    <div class="card">
-      <h3>PRO PLAN</h3>
-      <h1>Coming Soon</h1>
-      <p>
-        More RAM<br>
-        More Storage<br>
-        Java Support<br>
-        Priority Support
-      </p>
-      <a href="#contact" class="btn">Coming Soon</a>
-    </div>
+<div class="panel" id="console">
+<h2>Server Console</h2>
+<div class="console" id="logs">
+VELOX HOSTING PANEL READY<br>
+Waiting for server backend connection...
+</div>
+</div>
 
-    <div class="card">
-      <h3>ULTIMATE PLAN</h3>
-      <h1>Coming Soon</h1>
-      <p>
-        High Performance<br>
-        More Resources<br>
-        Advanced Panel<br>
-        Premium Support
-      </p>
-      <a href="#contact" class="btn">Coming Soon</a>
-    </div>
+<div class="panel" id="account">
+<h2>Account</h2>
+<p class="sub">VELOX HOSTING user dashboard preview.</p>
+<p>Backend login system: Coming Soon</p>
+</div>
+</main>
+</div>
 
-  </div>
-</section>
+<footer>© 2026 VELOX HOSTING | All Rights Reserved</footer>
 
-<section id="features">
-  <h2>Why Choose VELOX?</h2>
-  <div class="features">
-    <div class="feature">
-      <h3>⚡ Fast Hosting</h3>
-      <p>Designed for smooth Minecraft gameplay.</p>
-    </div>
-    <div class="feature">
-      <h3>🎮 Minecraft Support</h3>
-      <p>Build your own Minecraft community.</p>
-    </div>
-    <div class="feature">
-      <h3>🛡️ Server Control</h3>
-      <p>Manage your server from a control panel.</p>
-    </div>
-    <div class="feature">
-      <h3>🌍 Community</h3>
-      <p>Bring your friends and players together.</p>
-    </div>
-  </div>
-</section>
+<script>
+let servers=[];
+let active=-1;
 
-<section id="contact">
-  <h2>Ready to Start?</h2>
-  <p>VELOX HOSTING — Your Minecraft Journey Starts Here.</p>
-  <a href="https://discord.com/" class="btn">Join Discord</a>
-</section>
+function createServer(){
+ let name=document.getElementById("serverName").value.trim();
+ let edition=document.getElementById("edition").value;
+ if(!name){
+  document.getElementById("message").innerText="Please enter server name.";
+  return;
+ }
+ servers.push({name,edition,status:"Offline"});
+ active=servers.length-1;
+ document.getElementById("total").innerText=servers.length;
+ document.getElementById("selected").innerText=name+" ("+edition+")";
+ document.getElementById("message").innerText="Server added to dashboard!";
+ document.getElementById("serverName").value="";
+ log("Server created in dashboard: "+name);
+}
 
-<footer>
-  © 2026 VELOX HOSTING. All Rights Reserved.
-</footer>
+function control(action){
+ if(active<0){
+  log("Please create a server first.");
+  return;
+ }
+ if(action==="start") servers[active].status="Online";
+ if(action==="stop") servers[active].status="Offline";
+ if(action==="restart") servers[active].status="Restart requested (demo)";
+ document.getElementById("status").innerText=servers[active].status;
+ document.getElementById("controlStatus").innerText=servers[active].status;
+ log(action.toUpperCase()+" button clicked for "+servers[active].name);
+}
 
+function log(message){
+ let box=document.getElementById("logs");
+ box.innerHTML+="<br>"+message.replace(/</g,"&lt;").replace(/>/g,"&gt;");
+ box.scrollTop=box.scrollHeight;
+}
+</script>
 </body>
 </html>
