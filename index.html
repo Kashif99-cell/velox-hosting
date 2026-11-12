@@ -1,150 +1,30 @@
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>VELOX HOSTING | Dashboard</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial;background:#080d18;color:white}
-header{background:#101b2e;padding:20px 6%;display:flex;
-justify-content:space-between;align-items:center;border-bottom:1px solid #23466e}
-.logo{font-size:24px;color:#29a5ff;font-weight:bold}
-header span{color:#a9bad0;font-size:13px}
-.container{display:flex;min-height:85vh}
-aside{width:220px;background:#0d1626;padding:25px 15px}
-aside h3{color:#29a5ff;margin-bottom:25px}
-aside a{display:block;padding:14px;color:#c4d2e5;text-decoration:none;border-radius:7px}
-aside a:hover{background:#183252;color:white}
-main{padding:35px;width:100%;max-width:1200px}
-h1{font-size:30px;margin-bottom:10px}
-.sub{color:#9db0c8;margin-bottom:30px}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:18px}
-.card{background:#101b2e;border:1px solid #203c60;border-radius:12px;padding:22px}
-.card small{color:#9bb2cf}
-.card h2{margin-top:12px;color:#36aaff}
-.panel{background:#101b2e;border:1px solid #203c60;border-radius:12px;padding:25px;margin-top:25px}
-select,input{background:#080d18;color:white;border:1px solid #29476b;padding:12px;border-radius:7px;width:100%;margin:10px 0}
-button{border:0;border-radius:7px;padding:12px 18px;color:white;font-weight:bold;cursor:pointer;margin:5px}
-.start{background:#087e46}.stop{background:#c03939}.restart{background:#176ac2}
-.create{background:#168cff;width:100%;margin-top:12px}
-.console{background:#050a12;color:#61e69a;padding:18px;border-radius:8px;margin-top:15px;min-height:110px;font-family:monospace;line-height:1.8}
-.status{color:#ffc34e;font-weight:bold}
-footer{text-align:center;color:#8195ae;padding:25px}
-@media(max-width:650px){
-.container{display:block}
-aside{width:100%;display:flex;flex-wrap:wrap;gap:5px}
-aside h3{width:100%;margin-bottom:8px}
-aside a{padding:10px}
-main{padding:20px}
-header{padding:17px}
-}
-</style>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>VELOX HOSTING | Minecraft Server Hosting</title>
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-
-<header>
-<div class="logo">⚡ VELOX HOSTING</div>
-<span>Control Panel v1.0</span>
-</header>
-
-<div class="container">
-<aside>
-<h3>VELOX PANEL</h3>
-<a href="#dashboard">Dashboard</a>
-<a href="#create">Create Server</a>
-<a href="#console">Console</a>
-<a href="#account">Account</a>
-</aside>
-
-<main id="dashboard">
-<h1>Server Dashboard</h1>
-<p class="sub">Welcome to your VELOX control panel.</p>
-
-<div class="cards">
-<div class="card"><small>Total Servers</small><h2 id="total">0</h2></div>
-<div class="card"><small>Server Status</small><h2 id="status">Offline</h2></div>
-<div class="card"><small>RAM Allocation</small><h2>1 GB</h2></div>
-</div>
-
-<div class="panel" id="create">
-<h2>Create Your Server</h2>
-<p class="sub">Choose your Minecraft edition.</p>
-<select id="edition">
-<option value="Java">Minecraft Java</option>
-<option value="Bedrock">Minecraft Bedrock</option>
-</select>
-<input id="serverName" placeholder="Enter server name">
-<button class="create" onclick="createServer()">+ Create Server</button>
-<p id="message" class="sub"></p>
-</div>
-
-<div class="panel">
-<h2>Server Controls</h2>
-<p class="sub">Selected server: <b id="selected">None</b></p>
-<p class="status" id="controlStatus">Offline</p>
-<button class="start" onclick="control('start')">Start</button>
-<button class="stop" onclick="control('stop')">Stop</button>
-<button class="restart" onclick="control('restart')">Restart</button>
-</div>
-
-<div class="panel" id="console">
-<h2>Server Console</h2>
-<div class="console" id="logs">
-VELOX HOSTING PANEL READY<br>
-Waiting for server backend connection...
-</div>
-</div>
-
-<div class="panel" id="account">
-<h2>Account</h2>
-<p class="sub">VELOX HOSTING user dashboard preview.</p>
-<p>Backend login system: Coming Soon</p>
-</div>
-</main>
-</div>
-
-<footer>© 2026 VELOX HOSTING | All Rights Reserved</footer>
-
-<script>
-let servers=[];
-let active=-1;
-
-function createServer(){
- let name=document.getElementById("serverName").value.trim();
- let edition=document.getElementById("edition").value;
- if(!name){
-  document.getElementById("message").innerText="Please enter server name.";
-  return;
- }
- servers.push({name,edition,status:"Offline"});
- active=servers.length-1;
- document.getElementById("total").innerText=servers.length;
- document.getElementById("selected").innerText=name+" ("+edition+")";
- document.getElementById("message").innerText="Server added to dashboard!";
- document.getElementById("serverName").value="";
- log("Server created in dashboard: "+name);
-}
-
-function control(action){
- if(active<0){
-  log("Please create a server first.");
-  return;
- }
- if(action==="start") servers[active].status="Online";
- if(action==="stop") servers[active].status="Offline";
- if(action==="restart") servers[active].status="Restart requested (demo)";
- document.getElementById("status").innerText=servers[active].status;
- document.getElementById("controlStatus").innerText=servers[active].status;
- log(action.toUpperCase()+" button clicked for "+servers[active].name);
-}
-
-function log(message){
- let box=document.getElementById("logs");
- box.innerHTML+="<br>"+message.replace(/</g,"&lt;").replace(/>/g,"&gt;");
- box.scrollTop=box.scrollHeight;
-}
-</script>
-</body>
-</html>
+<header class="top"><a class="brand" href="/">VELOX<span> HOSTING</span></a><nav><a href="#plans">Plans</a><a href="#features">Features</a><a href="#order">Order</a><a href="/admin">Admin</a></nav></header>
+<main>
+<section class="hero"><p class="tag">MINECRAFT SERVER HOSTING</p><h1>Launch your world.<br><span>Build your community.</span></h1><p>Simple Minecraft hosting orders with a clean, modern experience.</p><a class="btn" href="#plans">Explore plans</a></section>
+<section id="features"><h2>Why VELOX?</h2><div class="cards"><article><h3>Easy setup</h3><p>Send your hosting request in a few steps.</p></article><article><h3>Panel powered</h3><p>Server provisioning through your Pterodactyl panel after admin review.</p></article><article><h3>Helpful support</h3><p>Contact the team for order updates and assistance.</p></article></div></section>
+<section id="plans"><h2>Hosting plans</h2><div class="cards">
+<article class="plan"><h3>Starter</h3><p class="ram">2 GB RAM</p><p>5 GB storage · 1 vCPU</p><p class="price">Price: Contact us</p><a class="btn choose" data-plan="starter" href="#order">Choose Starter</a></article>
+<article class="plan featured"><h3>Pro</h3><p class="ram">4 GB RAM</p><p>10 GB storage · 2 vCPU</p><p class="price">Price: Contact us</p><a class="btn choose" data-plan="pro" href="#order">Choose Pro</a></article>
+<article class="plan"><h3>Ultimate</h3><p class="ram">8 GB RAM</p><p>20 GB storage · 3 vCPU</p><p class="price">Price: Contact us</p><a class="btn choose" data-plan="ultimate" href="#order">Choose Ultimate</a></article>
+</div></section>
+<section id="order"><h2>Place an order</h2><form id="orderForm" class="form">
+<label>Your name<input name="customer" maxlength="80" required></label>
+<label>Email<input name="email" type="email" maxlength="120" required></label>
+<label>Server name<input name="serverName" maxlength="32" required></label>
+<label>Plan<select name="plan" id="plan" required><option value="starter">Starter — 2 GB</option><option value="pro">Pro — 4 GB</option><option value="ultimate">Ultimate — 8 GB</option></select></label>
+<label>Minecraft version<input name="version" value="1.21.4" required></label>
+<label>Extra notes (optional)<textarea name="notes" maxlength="500"></textarea></label>
+<button class="btn" type="submit">Submit order</button><p id="formMessage" role="status"></p>
+</form></section>
+<section><h2>Payment & support</h2><div class="notice"><p>JazzCash / EasyPaisa payment details will be shared by the VELOX team after your order is reviewed.</p><p>Do not send payment to an unverified person. Confirm the amount and recipient first.</p></div></section>
+</main><footer>© <span id="year"></span> VELOX HOSTING. Minecraft is a trademark of Mojang Studios.</footer>
+<script src="/app.js"></script></body></html>
