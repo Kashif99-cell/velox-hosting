@@ -1,30 +1,354 @@
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>VELOX HOSTING | Minecraft Server Hosting</title>
-  <link rel="stylesheet" href="/style.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-<header class="top"><a class="brand" href="/">VELOX<span> HOSTING</span></a><nav><a href="#plans">Plans</a><a href="#features">Features</a><a href="#order">Order</a><a href="/admin">Admin</a></nav></header>
-<main>
-<section class="hero"><p class="tag">MINECRAFT SERVER HOSTING</p><h1>Launch your world.<br><span>Build your community.</span></h1><p>Simple Minecraft hosting orders with a clean, modern experience.</p><a class="btn" href="#plans">Explore plans</a></section>
-<section id="features"><h2>Why VELOX?</h2><div class="cards"><article><h3>Easy setup</h3><p>Send your hosting request in a few steps.</p></article><article><h3>Panel powered</h3><p>Server provisioning through your Pterodactyl panel after admin review.</p></article><article><h3>Helpful support</h3><p>Contact the team for order updates and assistance.</p></article></div></section>
-<section id="plans"><h2>Hosting plans</h2><div class="cards">
-<article class="plan"><h3>Starter</h3><p class="ram">2 GB RAM</p><p>5 GB storage · 1 vCPU</p><p class="price">Price: Contact us</p><a class="btn choose" data-plan="starter" href="#order">Choose Starter</a></article>
-<article class="plan featured"><h3>Pro</h3><p class="ram">4 GB RAM</p><p>10 GB storage · 2 vCPU</p><p class="price">Price: Contact us</p><a class="btn choose" data-plan="pro" href="#order">Choose Pro</a></article>
-<article class="plan"><h3>Ultimate</h3><p class="ram">8 GB RAM</p><p>20 GB storage · 3 vCPU</p><p class="price">Price: Contact us</p><a class="btn choose" data-plan="ultimate" href="#order">Choose Ultimate</a></article>
-</div></section>
-<section id="order"><h2>Place an order</h2><form id="orderForm" class="form">
-<label>Your name<input name="customer" maxlength="80" required></label>
-<label>Email<input name="email" type="email" maxlength="120" required></label>
-<label>Server name<input name="serverName" maxlength="32" required></label>
-<label>Plan<select name="plan" id="plan" required><option value="starter">Starter — 2 GB</option><option value="pro">Pro — 4 GB</option><option value="ultimate">Ultimate — 8 GB</option></select></label>
-<label>Minecraft version<input name="version" value="1.21.4" required></label>
-<label>Extra notes (optional)<textarea name="notes" maxlength="500"></textarea></label>
-<button class="btn" type="submit">Submit order</button><p id="formMessage" role="status"></p>
-</form></section>
-<section><h2>Payment & support</h2><div class="notice"><p>JazzCash / EasyPaisa payment details will be shared by the VELOX team after your order is reviewed.</p><p>Do not send payment to an unverified person. Confirm the amount and recipient first.</p></div></section>
-</main><footer>© <span id="year"></span> VELOX HOSTING. Minecraft is a trademark of Mojang Studios.</footer>
-<script src="/app.js"></script></body></html>
+
+  <!-- NAVBAR -->
+  <header class="top">
+    <a href="index.html" class="brand">
+      VELOX <span>HOSTING</span>
+    </a>
+
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#plans">Plans</a>
+      <a href="#features">Features</a>
+      <a href="#order">Order</a>
+      <a href="admin.html">Admin</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <main>
+
+    <section class="hero" id="home">
+
+      <p class="tag">MINECRAFT SERVER HOSTING</p>
+
+      <h1>
+        Launch Your World.
+        <br>
+        <span>Build Your Community.</span>
+      </h1>
+
+      <p>
+        Welcome to VELOX HOSTING.
+        Get your Minecraft server hosting
+        and start building your own world.
+      </p>
+
+      <a href="#plans" class="btn">
+        Explore Plans
+      </a>
+
+    </section>
+
+    <!-- FEATURES -->
+    <section id="features">
+
+      <h2>Why Choose VELOX?</h2>
+
+      <div class="cards">
+
+        <article>
+          <h3>Easy Setup</h3>
+          <p>
+            Send your hosting request
+            in just a few steps.
+          </p>
+        </article>
+
+        <article>
+          <h3>Pterodactyl Panel</h3>
+          <p>
+            Manage your Minecraft server
+            through a familiar game panel.
+          </p>
+        </article>
+
+        <article>
+          <h3>Customer Support</h3>
+          <p>
+            Get assistance with your
+            hosting orders.
+          </p>
+        </article>
+
+        <article>
+          <h3>Multiple Plans</h3>
+          <p>
+            Choose a hosting plan
+            according to your needs.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <!-- PLANS -->
+    <section id="plans">
+
+      <h2>Our Hosting Plans</h2>
+
+      <div class="cards">
+
+        <!-- STARTER -->
+        <article class="plan">
+
+          <h3>STARTER</h3>
+
+          <p class="ram">2 GB RAM</p>
+
+          <p>5 GB Storage</p>
+          <p>1 vCPU</p>
+          <p>Java Support</p>
+
+          <h3>Contact Us</h3>
+
+          <a
+            href="#order"
+            class="btn choose"
+            data-plan="starter">
+            Choose Starter
+          </a>
+
+        </article>
+
+        <!-- PRO -->
+        <article class="plan featured">
+
+          <h3>PRO</h3>
+
+          <p class="ram">4 GB RAM</p>
+
+          <p>10 GB Storage</p>
+          <p>2 vCPU</p>
+          <p>Java Support</p>
+
+          <h3>Contact Us</h3>
+
+          <a
+            href="#order"
+            class="btn choose"
+            data-plan="pro">
+            Choose Pro
+          </a>
+
+        </article>
+
+        <!-- ULTIMATE -->
+        <article class="plan">
+
+          <h3>ULTIMATE</h3>
+
+          <p class="ram">8 GB RAM</p>
+
+          <p>20 GB Storage</p>
+          <p>3 vCPU</p>
+          <p>Java Support</p>
+
+          <h3>Contact Us</h3>
+
+          <a
+            href="#order"
+            class="btn choose"
+            data-plan="ultimate">
+            Choose Ultimate
+          </a>
+
+        </article>
+
+      </div>
+
+    </section>
+
+    <!-- ORDER FORM -->
+    <section id="order">
+
+      <h2>Order Your Server</h2>
+
+      <p>
+        Complete the form to submit
+        your Minecraft hosting request.
+      </p>
+
+      <form id="orderForm" class="form">
+
+        <label>
+          Your Name
+
+          <input
+            type="text"
+            name="customer"
+            maxlength="80"
+            placeholder="Enter your name"
+            required>
+        </label>
+
+        <label>
+          Email Address
+
+          <input
+            type="email"
+            name="email"
+            maxlength="120"
+            placeholder="Enter your email"
+            required>
+        </label>
+
+        <label>
+          Server Name
+
+          <input
+            type="text"
+            name="serverName"
+            maxlength="32"
+            placeholder="My Minecraft Server"
+            required>
+        </label>
+
+        <label>
+          Select Hosting Plan
+
+          <select name="plan" id="plan" required>
+
+            <option value="starter">
+              Starter - 2 GB RAM
+            </option>
+
+            <option value="pro">
+              Pro - 4 GB RAM
+            </option>
+
+            <option value="ultimate">
+              Ultimate - 8 GB RAM
+            </option>
+
+          </select>
+        </label>
+
+        <label>
+          Minecraft Version
+
+          <input
+            type="text"
+            name="version"
+            value="1.21.4"
+            required>
+        </label>
+
+        <label>
+          Extra Notes
+
+          <textarea
+            name="notes"
+            maxlength="500"
+            placeholder="Any additional requirements?">
+          </textarea>
+        </label>
+
+        <button class="btn" type="submit">
+          Submit Order
+        </button>
+
+        <p id="formMessage"></p>
+
+      </form>
+
+    </section>
+
+    <!-- PAYMENT -->
+    <section id="payment">
+
+      <h2>Payment Methods</h2>
+
+      <div class="cards">
+
+        <article>
+          <h3>JazzCash</h3>
+          <p>
+            Payment instructions will be
+            shared after order review.
+          </p>
+        </article>
+
+        <article>
+          <h3>EasyPaisa</h3>
+          <p>
+            Payment instructions will be
+            shared after order review.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+
+      <h2>Frequently Asked Questions</h2>
+
+      <article>
+        <h3>How can I order a server?</h3>
+        <p>
+          Select a hosting plan and
+          submit the order form.
+        </p>
+      </article>
+
+      <article>
+        <h3>Which Minecraft versions are supported?</h3>
+        <p>
+          Version availability depends
+          on the server setup.
+        </p>
+      </article>
+
+      <article>
+        <h3>How do I manage my server?</h3>
+        <p>
+          Server management will be
+          available through the panel
+          after setup.
+        </p>
+      </article>
+
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+
+    <h2>VELOX <span>HOSTING</span></h2>
+
+    <p>
+      Your Minecraft Hosting Platform.
+    </p>
+
+    <p>
+      © <span id="year"></span>
+      VELOX HOSTING. All rights reserved.
+    </p>
+
+    <a href="#home">Back to Top ↑</a>
+
+  </footer>
+
+  <!-- JAVASCRIPT -->
+  <script src="app.js"></script>
+
+</body>
+</html>
