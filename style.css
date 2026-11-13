@@ -1,609 +1,403 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Play.Hosting - Free Minecraft Servers</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --bg-main: #0b0f19;
-            --bg-card: #131b2e;
-            --bg-card-hover: #1a2540;
-            --accent: #3b82f6;
-            --accent-hover: #2563eb;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border: #1e293b;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 5%;
-            background-color: rgba(11, 15, 25, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-        }
-
-        .logo span {
-            color: var(--accent);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s;
-            cursor: pointer;
-        }
-
-        .nav-links a:hover, .nav-links a.active {
-            color: var(--text-main);
-        }
-
-        .btn {
-            background-color: var(--accent);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s, transform 0.1s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-        }
-
-        .btn:hover {
-            background-color: var(--accent-hover);
-        }
-
-        .btn:active {
-            transform: scale(0.98);
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            border: 1px solid var(--border);
-            color: var(--text-main);
-        }
-
-        .btn-outline:hover {
-            background-color: var(--border);
-        }
-
-        .view {
-            display: none;
-            flex: 1;
-            padding: 40px 5%;
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-        }
-
-        .view.active {
-            display: block;
-        }
-
-        .hero {
-            text-align: center;
-            padding: 60px 0;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-            background: linear-gradient(to right, #60a5fa, #3b82f6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p {
-            color: var(--text-muted);
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin: 0 auto 30px auto;
-        }
-
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .cloudflare-box {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: 40px;
-            border-radius: 16px;
-            text-align: center;
-            max-width: 400px;
-            width: 90%;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-        }
-
-        .cloudflare-box h2 {
-            margin-bottom: 15px;
-            font-size: 1.5rem;
-        }
-
-        .cloudflare-box p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 25px;
-        }
-
-        .cf-checkbox-container {
-            background: var(--bg-main);
-            border: 1px solid var(--border);
-            padding: 15px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-            margin-bottom: 20px;
-        }
-
-        .cf-checkbox-container span {
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-
-        .spinner {
-            width: 24px;
-            height: 24px;
-            border: 3px solid var(--border);
-            border-top: 3px solid var(--accent);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            display: none;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        .servers-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .server-card {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 20px;
-            transition: transform 0.2s, border-color 0.2s;
-            cursor: pointer;
-        }
-
-        .server-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-2px);
-        }
-
-        .server-info-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .server-name {
-            font-size: 1.2rem;
-            font-weight: 700;
-        }
-
-        .status-badge {
-            font-size: 0.75rem;
-            font-weight: 600;
-            padding: 4px 10px;
-            border-radius: 20px;
-            text-transform: uppercase;
-        }
-
-        .status-limbo {
-            background-color: rgba(245, 158, 11, 0.15);
-            color: var(--warning);
-            border: 1px solid rgba(245, 158, 11, 0.3);
-        }
-
-        .status-online {
-            background-color: rgba(16, 185, 129, 0.15);
-            color: var(--success);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-        }
-
-        .server-specs {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .panel-container {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        .panel-nav {
-            display: flex;
-            background-color: var(--bg-main);
-            border-bottom: 1px solid var(--border);
-            padding: 0 20px;
-        }
-
-        .panel-tab {
-            padding: 15px 20px;
-            color: var(--text-muted);
-            font-weight: 600;
-            cursor: pointer;
-            border-bottom: 2px solid transparent;
-        }
-
-        .panel-tab.active {
-            color: var(--text-main);
-            border-bottom-color: var(--accent);
-        }
-
-        .panel-body {
-            padding: 30px;
-        }
-
-        .console-box {
-            background-color: var(--bg-main);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 15px;
-            font-family: monospace;
-            height: 300px;
-            overflow-y: auto;
-            color: #4ade80;
-            margin-bottom: 15px;
-            font-size: 0.9rem;
-        }
-
-        .console-input-group {
-            display: flex;
-            gap: 10px;
-        }
-
-        .console-input-group input {
-            flex: 1;
-            background-color: var(--bg-main);
-            border: 1px solid var(--border);
-            padding: 10px 15px;
-            border-radius: 8px;
-            color: white;
-            outline: none;
-        }
-
-        .console-input-group input:focus {
-            border-color: var(--accent);
-        }
-
-        .limbo-banner {
-            background: rgba(245, 158, 11, 0.1);
-            border: 1px solid var(--warning);
-            padding: 20px;
-            border-radius: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .limbo-banner p {
-            color: var(--warning);
-            font-weight: 500;
-        }
-
-        .create-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-        }
-
-        .create-content {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: 30px;
-            border-radius: 12px;
-            width: 100%;
-            max-width: 450px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 0.9rem;
-            font-weight: 500;
-            margin-bottom: 8px;
-            color: var(--text-muted);
-        }
-
-        .form-group input, .form-group select {
-            width: 100%;
-            background: var(--bg-main);
-            border: 1px solid var(--border);
-            padding: 12px;
-            border-radius: 8px;
-            color: white;
-            outline: none;
-        }
-
-        .form-group input:focus, .form-group select:focus {
-            border-color: var(--accent);
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Navigation -->
-    <nav>
-        <div class="logo" onclick="switchView('home')">
-            <i class="fa-solid fa-cube" style="color: var(--accent);"></i> Play<span>.Hosting</span>
-        </div>
-        <div class="nav-links">
-            <a onclick="switchView('home')">Home</a>
-            <a onclick="triggerCloudflare()">Dashboard</a>
-            <button class="btn" onclick="triggerCloudflare()"><i class="fa-solid fa-plus"></i> Create Server</button>
-        </div>
-    </nav>
-
-    <!-- Cloudflare Security Verification Modal -->
-    <div class="modal-overlay" id="cfModal">
-        <div class="cloudflare-box">
-            <h2>Checking your browser</h2>
-            <p>Please complete the security check to access Play.Hosting dashboard.</p>
-            <div class="cf-checkbox-container" id="cfBox" onclick="verifyCloudflare()">
-                <span>Verify you are human</span>
-                <div class="spinner" id="cfSpinner"></div>
-                <i class="fa-regular fa-circle" id="cfCircle" style="font-size: 20px; color: var(--text-muted);"></i>
-            </div>
-            <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0;">Performance & security by Cloudflare</p>
-        </div>
-    </div>
-
-    <!-- 1. Home View -->
-    <div id="home" class="view active">
-        <div class="hero">
-            <h1>Free Minecraft Server Hosting</h1>
-            <p>Deploy your own high-performance Minecraft server in seconds. Free forever with Limbo protection.</p>
-            <button class="btn" style="font-size: 1.1rem; padding: 14px 28px;" onclick="triggerCloudflare()">
-                <i class="fa-solid fa-rocket"></i> Get Started Free
-            </button>
-        </div>
-    </div>
-
-    <!-- 2. Dashboard View -->
-    <div id="dashboard" class="view">
-        <div class="dashboard-header">
-            <h2>Your Servers</h2>
-            <button class="btn" onclick="openCreateModal()"><i class="fa-solid fa-plus"></i> New Server</button>
-        </div>
-        <div class="servers-grid" id="serversGrid">
-            <div class="server-card" onclick="openServerPanel('ALI', 'limbo')">
-                <div class="server-info-top">
-                    <span class="server-name">ALI</span>
-                    <span class="status-badge status-limbo">In limbo</span>
-                </div>
-                <div class="server-specs">
-                    <span><i class="fa-solid fa-microchip"></i> 1 GB RAM / 1vCPU</span>
-                    <span><i class="fa-solid fa-gamepad"></i> Paper 1.20.4</span>
-                </div>
-                <span style="font-size: 0.85rem; color: var(--accent);">Manage Server &rarr;</span>
-            </div>
-            <div class="server-card" onclick="openServerPanel('Kashif99', 'limbo')">
-                <div class="server-info-top">
-                    <span class="server-name">Kashif99</span>
-                    <span class="status-badge status-limbo">In limbo</span>
-                </div>
-                <div class="server-specs">
-                    <span><i class="fa-solid fa-microchip"></i> 2 GB RAM / 2vCPU</span>
-                    <span><i class="fa-solid fa-gamepad"></i> Survival SMP</span>
-                </div>
-                <span style="font-size: 0.85rem; color: var(--accent);">Manage Server &rarr;</span>
-            </div>
-            <div class="server-card" onclick="openServerPanel('BlockBashSMP', 'online')">
-                <div class="server-info-top">
-                    <span class="server-name">BlockBashSMP</span>
-                    <span class="status-badge status-online">Online</span>
-                </div>
-                <div class="server-specs">
-                    <span><i class="fa-solid fa-microchip"></i> 4 GB RAM / 2vCPU</span>
-                    <span><i class="fa-solid fa-gamepad"></i> Paper 1.21</span>
-                </div>
-                <span style="font-size: 0.85rem; color: var(--accent);">Manage Server &rarr;</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- 3. Server Control Panel View -->
-    <div id="serverPanel" class="view">
-        <div style="margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
-            <button class="btn btn-outline" style="padding: 6px 12px;" onclick="switchView('dashboard')"><i class="fa-solid fa-arrow-left"></i> Back</button>
-            <h2 id="panelServerName">Server Name</h2>
-        </div>
-
-        <div id="limboNotice" class="limbo-banner" style="display: none;">
-            <div>
-                <p><i class="fa-solid fa-triangle-exclamation"></i> Server is currently in Limbo (Inactive)</p>
-                <span style="font-size: 0.85rem; color: var(--text-muted);">Wake up your server to start playing instantly.</span>
-            </div>
-            <button class="btn" onclick="wakeServer()"><i class="fa-solid fa-power-off"></i> Wake Server</button>
-        </div>
-
-        <div class="panel-container">
-            <div class="panel-nav">
-                <div class="panel-tab active">Console</div>
-                <div class="panel-tab">Settings</div>
-                <div class="panel-tab">Files</div>
-            </div>
-            <div class="panel-body">
-                <div class="console-box" id="consoleLogs">
-                    [System] Initializing container environment...<br>
-                    [System] Assigned IP: play.hosting:25565<br>
-                    [Console] Waiting for server activation...
-                </div>
-                <div class="console-input-group">
-                    <input type="text" placeholder="Type command here (e.g. op Admin)..." id="commandInput">
-                    <button class="btn" onclick="sendCommand()">Send</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Create Server Modal -->
-    <div class="create-modal" id="createModal">
-        <div class="create-content">
-            <h3 style="margin-bottom: 20px;">Create New Server</h3>
-            <div class="form-group">
-                <label>Server Name</label>
-                <input type="text" id="newServerName" placeholder="e.g. MySurvivalWorld">
-            </div>
-            <div class="form-group">
-                <label>Software / Version</label>
-                <select id="newServerVersion">
-                    <option>PaperMC 1.21 (Latest)</option>
-                    <option>PaperMC 1.20.4</option>
-                    <option>Bedrock Edition</option>
-                    <option>Forge / Modded</option>
-                </select>
-            </div>
-            <div style="display: flex; gap: 10px; justify-content: flex-end;">
-                <button class="btn btn-outline" onclick="closeCreateModal()">Cancel</button>
-                <button class="btn" onclick="createServer()">Create Server</button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        let currentServer = "";
-        let serverStatusMap = {
-            'ALI': 'limbo',
-            'Kashif99': 'limbo',
-            'BlockBashSMP': 'online'
-        };
-
-        function switchView(viewId) {
-            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-            document.getElementById(viewId).classList.add('active');
-            window.scrollTo(0, 0);
-        }
-
-        function triggerCloudflare() {
-            document.getElementById('cfModal').style.display = 'flex';
-            document.getElementById('cfSpinner').style.display = 'none';
-            document.getElementById('cfCircle').style.display = 'block';
-            document.getElementById('cfCircle'].className = "fa-regular fa-circle";
-            document.getElementById('cfCircle').style.color = "var(--text-muted)";
-        }
-
-        function verifyCloudflare() {
-            let spinner = document.getElementById('cfSpinner');
-            let circle = document.getElementById('cfCircle');
-            
-            circle.style.display = 'none';
-            spinner.style.display = 'block';
-
-            setTimeout(() => {
-                spinner.style.display = 'none';
-                circle.style.display = 'block';
-                circle.className = "fa-solid fa-circle-check";
-                circle.style.color = "var(--success)";
-
-                setTimeout(() => {
-                    document.getElementById('cfModal').style.display = 'none';
-                    switchView('dashboard');
-                }, 600);
-            }, 1000);
-        }
-
-        function openServerPanel(name, status) {
-            currentServer = name;
-            document.getElementById('panelServerName').innerText = name;
-            let statusVal = serverStatusMap[name] || status;
-            
-            let consoleBox = document.getElementById('consoleLogs');
-            if (statusVal === 'limbo') {
-                document.getElementById('limboNotice').style.display = 'flex';
-                consoleBox.innerHTML = `[System] Server is in limbo mode.<br>[System] Click "Wake Server" to activate container.`;
-            } else {
-                document.getElementById('limboNotice').style.display = 'none';
-                consoleBox.innerHTML = `[System] Loading libraries, please wait...<br>[Server] Done (3.421s)! For help, 
+:root {
+    --bg-main: #0b0f19;
+    --bg-card: #131b2e;
+    --bg-card-hover: #1a2540;
+    --accent: #3b82f6;
+    --accent-hover: #2563eb;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --border: #1e293b;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5%;
+    background-color: rgba(11, 15, 25, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.logo span {
+    color: var(--accent);
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+    cursor: pointer;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: var(--text-main);
+}
+
+.btn {
+    background-color: var(--accent);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+}
+
+.btn:hover {
+    background-color: var(--accent-hover);
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-main);
+}
+
+.btn-outline:hover {
+    background-color: var(--border);
+}
+
+.view {
+    display: none;
+    flex: 1;
+    padding: 40px 5%;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.view.active {
+    display: block;
+}
+
+.hero {
+    text-align: center;
+    padding: 60px 0;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    background: linear-gradient(to right, #60a5fa, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero p {
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto 30px auto;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.cloudflare-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 40px;
+    border-radius: 16px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+}
+
+.cloudflare-box h2 {
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}
+
+.cloudflare-box p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 25px;
+}
+
+.cf-checkbox-container {
+    background: var(--bg-main);
+    border: 1px solid var(--border);
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.cf-checkbox-container span {
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.spinner {
+    width: 24px;
+    height: 24px;
+    border: 3px solid var(--border);
+    border-top: 3px solid var(--accent);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    display: none;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.servers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.server-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: transform 0.2s, border-color 0.2s;
+    cursor: pointer;
+}
+
+.server-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+}
+
+.server-info-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.server-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.status-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+}
+
+.status-limbo {
+    background-color: rgba(245, 158, 11, 0.15);
+    color: var(--warning);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.status-online {
+    background-color: rgba(16, 185, 129, 0.15);
+    color: var(--success);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.server-specs {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.panel-container {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.panel-nav {
+    display: flex;
+    background-color: var(--bg-main);
+    border-bottom: 1px solid var(--border);
+    padding: 0 20px;
+}
+
+.panel-tab {
+    padding: 15px 20px;
+    color: var(--text-muted);
+    font-weight: 600;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+}
+
+.panel-tab.active {
+    color: var(--text-main);
+    border-bottom-color: var(--accent);
+}
+
+.panel-body {
+    padding: 30px;
+}
+
+.console-box {
+    background-color: var(--bg-main);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 15px;
+    font-family: monospace;
+    height: 300px;
+    overflow-y: auto;
+    color: #4ade80;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+}
+
+.console-input-group {
+    display: flex;
+    gap: 10px;
+}
+
+.console-input-group input {
+    flex: 1;
+    background-color: var(--bg-main);
+    border: 1px solid var(--border);
+    padding: 10px 15px;
+    border-radius: 8px;
+    color: white;
+    outline: none;
+}
+
+.console-input-group input:focus {
+    border-color: var(--accent);
+}
+
+.limbo-banner {
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid var(--warning);
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.limbo-banner p {
+    color: var(--warning);
+    font-weight: 500;
+}
+
+.create-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.create-content {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 30px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 450px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--text-muted);
+}
+
+.form-group input, .form-group select {
+    width: 100%;
+    background: var(--bg-main);
+    border: 1px solid var(--border);
+    padding: 12px;
+    border-radius: 8px;
+    color: white;
+    outline: none;
+}
+
+.form-group input:focus, .form-group select:focus {
+    border-color: var(--accent);
+    }
