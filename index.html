@@ -560,9 +560,13 @@
                     </div>
 
                     <div class="panel-body">
-                        <!-- Overview Tab -->
+                        <!-- Overview Tab with IP visible -->
                         <div id="panelSecHome">
                             <div class="stats-grid">
+                                <div class="stat-card" style="grid-column: 1 / -1;">
+                                    <label>Server IP Address</label>
+                                    <val id="statIp" style="font-family: monospace; color: var(--accent); font-size: 1.1rem;">server.chaoshosting.net:25565</val>
+                                </div>
                                 <div class="stat-card">
                                     <label>Allocated RAM</label>
                                     <val id="statRam">4 GB</val>
@@ -601,12 +605,12 @@
                             <div class="files-list">
                                 <div class="file-item">
                                     <span><i class="fa-solid fa-file-lines" style="color: var(--accent); margin-right: 8px;"></i> server.properties</span>
-                                    <span style="font-size: 0.85rem; color: var(--text-muted); cursor: pointer;" onclick="alert('Opening server.properties editor...')">Edit</span>
+                                    <span style="font-size: 0.85rem; color: var(--text-muted);
+                                        r(--text-muted); cursor: pointer;" onclick="alert('Opening eula.txt...')">Edit</span>
                                 </div>
                                 <div class="file-item">
-                                    <span><i class="fa-solid fa-file-lines" style="color: var(--accent); margin-right: 8px;"></i> eula.txt</span>
-                                    <span st
-                                        yle="font-size: 0.85rem; color: var(--text-muted);">Open</span>
+                                    <span><i class="fa-solid fa-folder" style="color: var(--warning); margin-right: 8px;"></i> plugins / mods</span>
+                                    <span style="font-size: 0.85rem; color: var(--text-muted);">Open</span>
                                 </div>
                             </div>
                         </div>
@@ -803,6 +807,7 @@
             document.getElementById('panelServerName').innerText = srv.name;
             let domainIp = `${srv.name.toLowerCase().replace(/[^a-z0-9]/g, '')}.chaoshosting.net:25565`;
             document.getElementById('panelIpDisplay').innerText = domainIp;
+            document.getElementById('statIp').innerText = domainIp;
             document.getElementById('statRam').innerText = srv.ram + " GB";
             document.getElementById('statStorage').innerText = srv.storage + " GB";
             switchPanelTab('home');
