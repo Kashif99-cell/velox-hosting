@@ -6,7 +6,426 @@
     <title>Play.Hosting - Free Minecraft Servers</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --bg-main: #0b0f19;
+            --bg-card: #131b2e;
+            --bg-card-hover: #1a2540;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #1e293b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background-color: rgba(11, 15, 25, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-main);
+        }
+
+        .btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-main);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--border);
+        }
+
+        .view {
+            display: none;
+            flex: 1;
+            padding: 40px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .view.active {
+            display: block;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 0;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #60a5fa, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+        }
+
+        /* Dashboard View */
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .servers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .server-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            transition: transform 0.2s, border-color 0.2s;
+            cursor: pointer;
+        }
+
+        .server-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .server-info-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .server-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .status-badge {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+
+        .status-limbo {
+            background-color: rgba(245, 158, 11, 0.15);
+            color: var(--warning);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .status-online {
+            background-color: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .server-specs {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        /* Panel Container */
+        .panel-container {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .panel-header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--bg-main);
+            border-bottom: 1px solid var(--border);
+            padding: 0 20px;
+        }
+
+        .panel-nav {
+            display: flex;
+        }
+
+        .panel-tab {
+            padding: 15px 20px;
+            color: var(--text-muted);
+            font-weight: 600;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+
+        .panel-tab.active {
+            color: var(--text-main);
+            border-bottom-color: var(--accent);
+        }
+
+        /* Three Dots Menu */
+        .menu-container {
+            position: relative;
+        }
+
+        .dots-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+
+        .dots-btn:hover {
+            color: var(--text-main);
+            background-color: var(--border);
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 45px;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.5);
+            width: 180px;
+            z-index: 50;
+            overflow: hidden;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 12px 16px;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid var(--border);
+            text-decoration: none;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--bg-card-hover);
+        }
+
+        .panel-body {
+            padding: 30px;
+        }
+
+        .console-box {
+            background-color: var(--bg-main);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 15px;
+            font-family: monospace;
+            height: 300px;
+            overflow-y: auto;
+            color: #4ade80;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .console-input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .console-input-group input {
+            flex: 1;
+            background-color: var(--bg-main);
+            border: 1px solid var(--border);
+            padding: 10px 15px;
+            border-radius: 8px;
+            color: white;
+            outline: none;
+        }
+
+        .console-input-group input:focus {
+            border-color: var(--accent);
+        }
+
+        /* Files Section */
+        .files-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .file-item {
+            background-color: var(--bg-main);
+            border: 1px solid var(--border);
+            padding: 12px 18px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .file-item:hover {
+            border-color: var(--accent);
+        }
+
+        .limbo-banner {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid var(--warning);
+            padding: 20px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .limbo-banner p {
+            color: var(--warning);
+            font-weight: 500;
+        }
+
+        /* Create Server Modal */
+        .create-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .create-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 30px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            background: var(--bg-main);
+            border: 1px solid var(--border);
+            padding: 12px;
+            border-radius: 8px;
+            color: white;
+            outline: none;
+        }
+    </style>
 </head>
 <body>
 
@@ -17,31 +436,17 @@
         </div>
         <div class="nav-links">
             <a onclick="switchView('home')">Home</a>
-            <a onclick="triggerCloudflare()">Dashboard</a>
-            <button class="btn" onclick="triggerCloudflare()"><i class="fa-solid fa-plus"></i> Create Server</button>
+            <a onclick="switchView('dashboard')">Servers</a>
+            <button class="btn" onclick="openCreateModal()"><i class="fa-solid fa-plus"></i> Create Server</button>
         </div>
     </nav>
-
-    <!-- Cloudflare Security Verification Modal -->
-    <div class="modal-overlay" id="cfModal">
-        <div class="cloudflare-box">
-            <h2>Checking your browser</h2>
-            <p>Please complete the security check to access Play.Hosting dashboard.</p>
-            <div class="cf-checkbox-container" id="cfBox" onclick="verifyCloudflare()">
-                <span>Verify you are human</span>
-                <div class="spinner" id="cfSpinner"></div>
-                <i class="fa-regular fa-circle" id="cfCircle" style="font-size: 20px; color: var(--text-muted);"></i>
-            </div>
-            <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0;">Performance & security by Cloudflare</p>
-        </div>
-    </div>
 
     <!-- 1. Home View -->
     <div id="home" class="view active">
         <div class="hero">
             <h1>Free Minecraft Server Hosting</h1>
             <p>Deploy your own high-performance Minecraft server in seconds. Free forever with Limbo protection.</p>
-            <button class="btn" style="font-size: 1.1rem; padding: 14px 28px;" onclick="triggerCloudflare()">
+            <button class="btn" style="font-size: 1.1rem; padding: 14px 28px;" onclick="switchView('dashboard')">
                 <i class="fa-solid fa-rocket"></i> Get Started Free
             </button>
         </div>
@@ -106,20 +511,66 @@
         </div>
 
         <div class="panel-container">
-            <div class="panel-nav">
-                <div class="panel-tab active">Console</div>
-                <div class="panel-tab">Settings</div>
-                <div class="panel-tab">Files</div>
-            </div>
-            <div class="panel-body">
-                <div class="console-box" id="consoleLogs">
-                    [System] Initializing container environment...<br>
-                    [System] Assigned IP: play.hosting:25565<br>
-                    [Console] Waiting for server activation...
+            <!-- Panel Header with Tabs & 3-Dots Menu -->
+            <div class="panel-header-bar">
+                <div class="panel-nav">
+                    <div class="panel-tab active" id="tabConsole" onclick="switchTab('console')">Console</div>
+                    <div class="panel-tab" id="tabFiles" onclick="switchTab('files')">Files</div>
+                    <div class="panel-tab" id="tabSettings" onclick="switchTab('settings')">Settings</div>
                 </div>
-                <div class="console-input-group">
-                    <input type="text" placeholder="Type command here (e.g. op Admin)..." id="commandInput">
-                    <button class="btn" onclick="sendCommand()">Send</button>
+                
+                <!-- Three Dots Menu Button -->
+                <div class="menu-container">
+                    <button class="dots-btn" onclick="toggleDropdown()"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                    <div class="dropdown-menu" id="panelDropdown">
+                        <div class="dropdown-item" onclick="switchTab('files'); toggleDropdown();"><i class="fa-solid fa-folder-open"></i> Files Manager</div>
+                        <div class="dropdown-item" onclick="clearConsole(); toggleDropdown();"><i class="fa-solid fa-broom"></i> Clear Console</div>
+                        <div class="dropdown-item" onclick="switchTab('settings'); toggleDropdown();"><i class="fa-solid fa-gear"></i> Server Settings</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-body">
+                <!-- Console Section -->
+                <div id="sectionConsole">
+                    <div class="console-box" id="consoleLogs">
+                        [System] Initializing container environment...<br>
+                        [System] Assigned IP: play.hosting:25565<br>
+                        [Console] Waiting for server activation...
+                    </div>
+                    <div class="console-input-group">
+                        <input type="text" placeholder="Type command here (e.g. op Admin)..." id="commandInput">
+                        <button class="btn" onclick="sendCommand()">Send</button>
+                    </div>
+                </div>
+
+                <!-- Files Section -->
+                <div id="sectionFiles" style="display: none;">
+                    <h3 style="margin-bottom: 15px;">Server Files</h3>
+                    <div class="files-list">
+                        <div class="file-item">
+                            <span><i class="fa-solid fa-file-lines" style="color: var(--accent); margin-right: 8px;"></i> server.properties</span>
+                            <span style="font-size: 0.85rem; color: var(--text-muted);">Edit</span>
+                        </div>
+                        <div class="file-item">
+                            <span><i class="fa-solid fa-file-lines" style="color: var(--accent); margin-right: 8px;"></i> eula.txt</span>
+                            <span style="font-size: 0.85rem; color: var(--text-muted);">Edit</span>
+                        </div>
+                        <div class="file-item">
+                            <span><i class="fa-solid fa-file-lines" style="color: var(--accent); margin-right: 8px;"></i> ops.json</span>
+                            <span style="font-size: 0.85rem; color: var(--text-muted);">Edit</span>
+                        </div>
+                        <div class="file-item">
+                            <span><i class="fa-solid fa-folder" style="color: var(--warning); margin-right: 8px;"></i> plugins / mods</span>
+                            <span style="font-size: 0.85rem; color: var(--text-muted);">Open</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Section -->
+                <div id="sectionSettings" style="display: none;">
+                    <h3>Server Settings</h3>
+                    <p style="color: var(--text-muted); margin-top: 10px; font-size: 0.95rem;">Configure your RAM, CPU allocation, and server version preferences here.</p>
                 </div>
             </div>
         </div>
@@ -141,6 +592,10 @@
                     <option>Bedrock Edition</option>
                     <option>Forge / Modded</option>
                 </select>
+   <option>PaperMC 1.20.4</option>
+                    <option>Bedrock Edition</option>
+                    <option>Forge / Modded</option>
+                </select>
             </div>
             <div style="display: flex; gap: 10px; justify-content: flex-end;">
                 <button class="btn btn-outline" onclick="closeCreateModal()">Cancel</button>
@@ -149,6 +604,130 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        let currentServer = "";
+        let serverStatusMap = {
+            'ALI': 'limbo',
+            'Kashif99': 'limbo',
+            'BlockBashSMP': 'online'
+        };
+
+        function switchView(viewId) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function toggleDropdown() {
+            let menu = document.getElementById('panelDropdown');
+            menu.classList.toggle('show');
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.dots-btn') && !event.target.matches('.fa-ellipsis-vertical')) {
+                let dropdowns = document.getElementsByClassName("dropdown-menu");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    let openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.panel-tab').forEach(t => t.classList.remove('active'));
+            document.getElementById('sectionConsole').style.display = 'none';
+            document.getElementById('sectionFiles').style.display = 'none';
+            document.getElementById('sectionSettings').style.display = 'none';
+
+            if(tabName === 'console') {
+                document.getElementById('tabConsole').classList.add('active');
+                document.getElementById('sectionConsole').style.display = 'block';
+            } else if(tabName === 'files') {
+                document.getElementById('tabFiles').classList.add('active');
+                document.getElementById('sectionFiles').style.display = 'block';
+            } else if(tabName === 'settings') {
+                document.getElementById('tabSettings').classList.add('active');
+                document.getElementById('sectionSettings').style.display = 'block';
+            }
+        }
+
+        function clearConsole() {
+            document.getElementById('consoleLogs').innerHTML = "[System] Console cleared.";
+        }
+
+        function openServerPanel(name, status) {
+            currentServer = name;
+            document.getElementById('panelServerName').innerText = name;
+            let statusVal = serverStatusMap[name] || status;
+            
+            let consoleBox = document.getElementById('consoleLogs');
+            if (statusVal === 'limbo') {
+                document.getElementById('limboNotice').style.display = 'flex';
+                consoleBox.innerHTML = `[System] Server is in limbo mode.<br>[System] Click "Wake Server" to activate container.`;
+            } else {
+                document.getElementById('limboNotice').style.display = 'none';
+                consoleBox.innerHTML = `[System] Loading libraries, please wait...<br>[Server] Done (3.421s)! For help, type "help"`;
+            }
+            switchTab('console');
+            switchView('serverPanel');
+        }
+
+        function wakeServer() {
+            let consoleBox = document.getElementById('consoleLogs');
+            document.getElementById('limboNotice').style.display = 'none';
+            serverStatusMap[currentServer] = 'online';
+            consoleBox.innerHTML += `<br>[System] Waking up server container...`;
+            setTimeout(() => {
+                consoleBox.innerHTML += `<br>[System] Allocated resources successfully! Server is now online.`;
+                consoleBox.scrollTop = consoleBox.scrollHeight;
+            }, 1000);
+        }
+
+        function sendCommand() {
+            let input = document.getElementById('commandInput');
+            let consoleBox = document.getElementById('consoleLogs');
+            if(input.value.trim() !== "") {
+                consoleBox.innerHTML += `<br>> ${input.value}`;
+                consoleBox.innerHTML += `<br>[Server] Command executed successfully.`;
+                input.value = "";
+                consoleBox.scrollTop = consoleBox.scrollHeight;
+            }
+        }
+
+        function openCreateModal() {
+            document.getElementById('createModal').style.display = 'flex';
+        }
+
+        function closeCreateModal() {
+            document.getElementById('createModal').style.display = 'none';
+        }
+
+        function createServer() {
+            let nameInput = document.getElementById('newServerName').value.trim();
+            if(nameInput === "") {
+                alert("Please enter a server name!");
+                return;
+            }
+            serverStatusMap[nameInput] = 'limbo';
+            let grid = document.getElementById('serversGrid');
+            grid.innerHTML += `
+                <div class="server-card" onclick="openServerPanel('${nameInput}', 'limbo')">
+                    <div class="server-info-top">
+                        <span class="server-name">${nameInput}</span>
+                        <span class="status-badge status-limbo">In limbo</span>
+                    </div>
+                    <div class="server-specs">
+                        <span><i class="fa-solid fa-microchip"></i> 2 GB RAM / 2vCPU</span>
+                        <span><i class="fa-solid fa-gamepad"></i> Paper 1.21</span>
+                    </div>
+                    <span style="font-size: 0.85rem; color: var(--accent);">Manage Server &rarr;</span>
+                </div>
+            `;
+            closeCreateModal();
+            document.getElementById('newServerName').value = "";
+        }
+    </script>
 </body>
 </html>
