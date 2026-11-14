@@ -263,12 +263,6 @@
             text-transform: uppercase;
         }
 
-        .status-limbo {
-            background-color: rgba(245, 158, 11, 0.15);
-            color: var(--warning);
-            border: 1px solid rgba(245, 158, 11, 0.3);
-        }
-
         .status-online {
             background-color: rgba(16, 185, 129, 0.15);
             color: var(--success);
@@ -469,9 +463,7 @@
             <i class="fa-solid fa-cube" style="color: var(--accent);"></i> Chaos<span>Hosting</span>
         </div>
         <div class="nav-links" id="navLinks">
-            <a onclick="switchView('home')">Home</a>
-            <a onclick="openAuthModal('login')">Login</a>
-            <button class="btn" onclick="openAuthModal('register')"><i class="fa-solid fa-user-plus"></i> Register</button>
+            <!-- Loaded dynamically via JS -->
         </div>
     </nav>
 
@@ -605,8 +597,12 @@
                             <div class="files-list">
                                 <div class="file-item">
                                     <span><i class="fa-solid fa-file-lines" style="color: var(--accent); margin-right: 8px;"></i> server.properties</span>
-                                    <span style="font-size: 0.85rem; color: var(--text-muted);
-                                        r(--text-muted); cursor: pointer;" onclick="alert('Opening eula.txt...')">Edit</span>
+                                    <span style="font-size: 0.85rem; color: var(--text-muted); cursor: pointer;" onclick="alert('Opening server.properties editor...')">Edit</span>
+                                </div>
+                                <div class="file-item">
+                                    <span><i class="fa-solid fa-file-lines" style="color: var(--accent); margin-right: 8px;"></i> eula.txt</span>
+                                    <span 
+    style="font-size: 0.85rem; color: var(--text-muted); cursor: pointer;" onclick="alert('Opening eula.txt...')">Edit</span>
                                 </div>
                                 <div class="file-item">
                                     <span><i class="fa-solid fa-folder" style="color: var(--warning); margin-right: 8px;"></i> plugins / mods</span>
@@ -665,10 +661,18 @@
     </div>
 
     <script>
-        let isLoggedIn = false;
-        let servers = [];
+        let currentUser = localStorage.getItem('chaos_user');
+        let servers = JSON.parse(localStorage.getItem('chaos_servers')) || [];
         let currentServerIndex = null;
         let authActionType = '';
+
+        window.onload = function() {
+            if (currentUser) {
+                updateNavUser(currentUser);
+            } else {
+                logoutNav();
+            }
+        };
 
         function switchView(viewId) {
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -716,7 +720,8 @@
                 alert("Please enter your email!");
                 return;
             }
-            isLoggedIn = true;
+            currentUser = email;
+            localStorage.setItem('chaos_user', email);
             closeAuthModal();
             updateNavUser(email);
             switchView('dashboard');
@@ -730,22 +735,27 @@
             `;
         }
 
-        function logout() {
-            isLoggedIn = false;
-            servers = [];
+        function logoutNav() {
             document.getElementById('navLinks').innerHTML = `
                 <a onclick="switchView('home')">Home</a>
                 <a onclick="openAuthModal('login')">Login</a>
                 <button class="btn" onclick="openAuthModal('register')"><i class="fa-solid fa-user-plus"></i> Register</button>
             `;
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('chaos_user');
+            logoutNav();
             switchView('home');
         }
 
         function checkAuthAndGoDashboard() {
-            if(!isLoggedIn) {
+            if(!currentUser) {
                 openAuthModal('register');
             } else {
                 switchView('dashboard');
+                renderServers();
             }
         }
 
@@ -795,6 +805,7 @@
             }
 
             servers.push({ name, version, ram, storage });
+            localStorage.setItem('chaos_servers', JSON.stringify(servers));
             closeCreateModal();
             document.getElementById('newServerName').value = "";
             renderServers();
