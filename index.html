@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Play.Hosting - Free Minecraft Servers</title>
+    <title>Chaos.Hosting - Free Minecraft Servers</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -11,8 +11,8 @@
             --bg-main: #0b0f19;
             --bg-card: #131b2e;
             --bg-card-hover: #1a2540;
-            --accent: #3b82f6;
-            --accent-hover: #2563eb;
+            --accent: #8b5cf6;
+            --accent-hover: #7c3aed;
             --success: #10b981;
             --warning: #f59e0b;
             --danger: #ef4444;
@@ -132,7 +132,7 @@
             font-size: 3rem;
             font-weight: 800;
             margin-bottom: 20px;
-            background: linear-gradient(to right, #60a5fa, #3b82f6);
+            background: linear-gradient(to right, #a78bfa, #8b5cf6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -144,7 +144,6 @@
             margin: 0 auto 30px auto;
         }
 
-        /* Dashboard View */
         .dashboard-header {
             display: flex;
             justify-content: space-between;
@@ -156,6 +155,21 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            grid-column: 1 / -1;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
         }
 
         .server-card {
@@ -207,13 +221,22 @@
         .server-specs {
             color: var(--text-muted);
             font-size: 0.9rem;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             display: flex;
             flex-direction: column;
             gap: 5px;
         }
 
-        /* Panel Container */
+        .server-ip-tag {
+            font-size: 0.8rem;
+            background: var(--bg-main);
+            padding: 6px 10px;
+            border-radius: 6px;
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+            font-family: monospace;
+        }
+
         .panel-container {
             background-color: var(--bg-card);
             border: 1px solid var(--border);
@@ -248,7 +271,6 @@
             border-bottom-color: var(--accent);
         }
 
-        /* Three Dots Menu */
         .menu-container {
             position: relative;
         }
@@ -295,7 +317,6 @@
             align-items: center;
             gap: 10px;
             border-bottom: 1px solid var(--border);
-            text-decoration: none;
         }
 
         .dropdown-item:last-child {
@@ -338,11 +359,6 @@
             outline: none;
         }
 
-        .console-input-group input:focus {
-            border-color: var(--accent);
-        }
-
-        /* Files Section */
         .files-list {
             display: flex;
             flex-direction: column;
@@ -357,12 +373,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            cursor: pointer;
-            transition: border-color 0.2s;
-        }
-
-        .file-item:hover {
-            border-color: var(--accent);
         }
 
         .limbo-banner {
@@ -381,7 +391,7 @@
             font-weight: 500;
         }
 
-        /* Create Server Modal */
+        /* Modal */
         .create-modal {
             display: none;
             position: fixed;
@@ -398,6 +408,7 @@
         .create-content {
             background: var(--bg-card);
             border: 1px solid var(--border);
+            padding: 3
             padding: 30px;
             border-radius: 12px;
             width: 100%;
@@ -511,7 +522,6 @@
         </div>
 
         <div class="panel-container">
-            <!-- Panel Header with Tabs & 3-Dots Menu -->
             <div class="panel-header-bar">
                 <div class="panel-nav">
                     <div class="panel-tab active" id="tabConsole" onclick="switchTab('console')">Console</div>
@@ -519,7 +529,7 @@
                     <div class="panel-tab" id="tabSettings" onclick="switchTab('settings')">Settings</div>
                 </div>
                 
-                <!-- Three Dots Menu Button -->
+                <!-- Three Dots Menu -->
                 <div class="menu-container">
                     <button class="dots-btn" onclick="toggleDropdown()"><i class="fa-solid fa-ellipsis-vertical"></i></button>
                     <div class="dropdown-menu" id="panelDropdown">
@@ -589,10 +599,6 @@
                 <select id="newServerVersion">
                     <option>PaperMC 1.21 (Latest)</option>
                     <option>PaperMC 1.20.4</option>
-                    <option>Bedrock Edition</option>
-                    <option>Forge / Modded</option>
-                </select>
-   <option>PaperMC 1.20.4</option>
                     <option>Bedrock Edition</option>
                     <option>Forge / Modded</option>
                 </select>
