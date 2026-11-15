@@ -414,6 +414,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            cursor: pointer;
+        }
+
+        .file-item:hover {
+            border-color: var(--accent);
         }
 
         /* Create Server Modal */
@@ -558,7 +563,8 @@
                     <div class="panel-header-bar">
                         <span id="panelIpDisplay" style="font-family: monospace; color: var(--accent); font-weight: 600;">ip:25565</span>
                         <div style="display: flex; gap: 10px;">
-                            <button class="btn" style="background-color: var(--success);" onclick="restartServer()"><i class="fa-solid fa-rotate-right"></i> Restart</button>
+                            <button class="btn" style="background-color: var(--success);" onclick="startServer()"><i class="fa-solid fa-play"></i> Start</button>
+                            <button class="btn" style="background-color: var(--warning); color: #000;" onclick="restartServer()"><i class="fa-solid fa-rotate-right"></i> Restart</button>
                             <button class="btn btn-danger" onclick="stopServer()"><i class="fa-solid fa-power-off"></i> Stop</button>
                         </div>
                     </div>
@@ -606,18 +612,18 @@
                         <!-- Files Tab -->
                         <div id="panelSecFiles" style="display: none;">
                             <h3 style="margin-bottom: 15px;">File Manager</h3>
-                            <div class="files-list">
-                                <div class="file-item">
+                            <div class="files-list" id="filesListContainer">
+                                <div class="file-item" onclick="openFileEditor('server.properties')">
                                     <span><i class="fa-solid fa-file-lines" style="color: var(--accent); margin-right: 8px;"></i> server.properties</span>
-                                    <span style="font-size: 0.85rem; color: var(--text-muted); cursor: pointer;" onclick="openFileEditor('server.properties')">Edit</span>
+                                    <span style="font-size: 0.85rem; color: var(--text-muted);">Edit</span>
                                 </div>
-                                <div class="file-item">
+                                <div class="file-item" onclick="openFileEditor('eula.txt')">
                                     <span><i class="fa-solid fa-file-lines" style="color: var(--accent); margin-right: 8px;"></i> eula.txt</span>
-                                    <span style="font-size: 0.85rem; color: var(--text-muted); cursor: pointer;" onclick="openFileEditor('eula.txt')">Edit</span>
+                                    <span style="font-size: 0.85rem; color: var(--text-muted);">Edit</span>
                                 </div>
-                                <div class="file-item">
+                                <div class="file-item" onclick="openPluginsFolder()">
                                     <span><i class="fa-solid fa-folder" style="color: var(--warning); margin-right: 8px;"></i> plugins / mods</span>
-                                    <span style="font-size: 0.85rem; color: var(--text-muted);">Open</span>
+                                    <span style="font-size: 0.85rem; color: var(--text-muted);">Open &rarr;</span>
                                 </div>
                             </div>
                         </div>
@@ -832,6 +838,7 @@
             document.getElementById('statIp').innerText = domainIp;
             document.getElementById('statRam').innerText = srv.ram + " GB";
             document.getElementById('statStorage').innerText = srv.storage + " GB";
+            openRootFiles();
             switchPanelTab('home');
             switchView('serverPanel');
         }
@@ -843,6 +850,17 @@
             });
             document.getElementById('panelSec' + tab.charAt(0).toUpperCase() + tab.slice(1)).style.display = 'block';
             document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
+        }
+
+        function startServer() {
+            let consoleBox = document.getElementById('consoleLogs');
+            let statusVal = document.getElementById('statStatus');
+            
+            statusVal.innerText = "Online";
+            statusVal.style.color = "var(--success)";
+            consoleBox.innerHTML += `<br>[System] Starting server container...`;
+            consoleBox.innerHTML += `<br>[Server] Done! Server is online and listening.`;
+            consoleBox.scrollTop = consoleBox.scrollHeight;
         }
 
         function restartServer() {
@@ -895,6 +913,41 @@
         function saveFileContent() {
             alert("File saved successfully!");
             closeFileEditor();
+        }
+
+        function openPluginsFolder() {
+            let list = document.getElementById('filesListContainer');
+            list.innerHTML = `
+                <div class="file-item" onclick="openRootFiles()" style="background: var(--bg-card-hover);">
+                    <span><i class="fa-solid fa-arrow-left" style="margin-right: 8px;"></i> Back to main folder</span>
+                </div>
+                <div class="file-item">
+                    <span><i class="fa-solid fa-file-zipper" style="color: var(--accent); margin-right: 8px;"></i> EssentialsX.jar</span>
+                    <span style="font-size: 0.85rem; color: var(--text-muted);">Plugin</span>
+                </div>
+                <div class="file-item">
+                    <span><i class="fa-solid fa-file-zipper" style="color: var(--accent); margin-right: 8px;"></i> WorldGuard.jar</span>
+                    <span style="font-size: 0.85rem; color: var(--text-muted);">Plugin</span>
+                </div>
+            `;
+        }
+
+        function openRootFiles() {
+            let list = document.getElementById('filesListContainer');
+            list.innerHTML = `
+                <div class="file-item" onclick="openFileEditor('server.properties')">
+                    <span><i class="fa-solid fa-file-lines" style="color: var(--accent); margin-right: 8px;"></i> server.properties</span>
+                    <span style="font-size: 0.85rem; color: var(--text-muted);">Edit</span>
+                </div>
+                <div class="file-item" onclick="openFileEditor('eula.txt')">
+                    <span><i class="fa-solid fa-file-lines" style="color: var(--accent); margin-right: 8px;"></i> eula.txt</span>
+                    <span style="font-size: 0.85rem; color: var(--text-muted);">Edit</span>
+                </div>
+                <div class="file-item" onclick="openPluginsFolder()">
+                    <span><i class="fa-solid fa-folder" style="color: var(--warning); margin-right: 8px;"></i> plugins / mods</span>
+                    <span style="font-size: 0.85rem; color: var(--text-muted);">Open &rarr;</span>
+                </div>
+            `;
         }
     </script>
 </body>
