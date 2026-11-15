@@ -561,7 +561,7 @@
             <div class="panel-main-content">
                 <div class="panel-container">
                     <div class="panel-header-bar">
-                        <span id="panelIpDisplay" style="font-family: monospace; color: var(--accent); font-weight: 600;">ip:25565</span>
+                        <span id="panelIpDisplay" style="font-family: monospace; color: var(--accent); font-weight: 600;">play.servername.net:25565</span>
                         <div style="display: flex; gap: 10px;">
                             <button class="btn" style="background-color: var(--success);" onclick="startServer()"><i class="fa-solid fa-play"></i> Start</button>
                             <button class="btn" style="background-color: var(--warning); color: #000;" onclick="restartServer()"><i class="fa-solid fa-rotate-right"></i> Restart</button>
@@ -575,7 +575,7 @@
                             <div class="stats-grid">
                                 <div class="stat-card" style="grid-column: 1 / -1;">
                                     <label>Server IP Address</label>
-                                    <val id="statIp" style="font-family: monospace; color: var(--accent); font-size: 1.1rem;">server.chaoshosting.net:25565</val>
+                                    <val id="statIp" style="font-family: monospace; color: var(--accent); font-size: 1.1rem;">play.servername.net:25565</val>
                                 </div>
                                 <div class="stat-card">
                                     <label>Allocated RAM</label>
@@ -600,7 +600,7 @@
                         <div id="panelSecConsole" style="display: none;">
                             <div class="console-box" id="consoleLogs">
                                 [System] Initializing container environment...<br>
-                                [System] Assigned Domain: server.chaoshosting.net:25565<br>
+                                [System] Assigned Domain: play.servername.net:25565<br>
                                 [Server] Done (3.421s)! For help, type "help"
                             </div>
                             <div class="console-input-group">
@@ -784,7 +784,8 @@
                 return;
             }
             servers.forEach((srv, idx) => {
-                let domainIp = `${srv.name.toLowerCase().replace(/[^a-z0-9]/g, '')}.chaoshosting.net`;
+                let cleanName = srv.name.toLowerCase().replace(/[^a-z0-9]/g, '');
+                let domainIp = `play.${cleanName}.net`;
                 grid.innerHTML += `
                     <div class="server-card" onclick="openServerPanel(${idx})">
                         <div class="server-info-top">
@@ -833,7 +834,8 @@
             currentServerIndex = idx;
             let srv = servers[idx];
             document.getElementById('panelServerName').innerText = srv.name;
-            let domainIp = `${srv.name.toLowerCase().replace(/[^a-z0-9]/g, '')}.chaoshosting.net:25565`;
+            let cleanName = srv.name.toLowerCase().replace(/[^a-z0-9]/g, '');
+            let domainIp = `play.${cleanName}.net:25565`;
             document.getElementById('panelIpDisplay').innerText = domainIp;
             document.getElementById('statIp').innerText = domainIp;
             document.getElementById('statRam').innerText = srv.ram + " GB";
